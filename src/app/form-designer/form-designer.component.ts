@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-form-designer',
@@ -16,7 +16,9 @@ export class FormDesignerComponent implements OnInit {
     {label: "Number", type: "number"},
     {label: "Date", type: "date"},
     {label: "Checkbox", type: "checkbox"},
-    {label: "Select", type: "select"}
+    {label: "Select", type: "select"},
+    {label: "ngSelect", type: "ngselect"}
+
   ];
   @Output("designerFormOnSave") designerFormOnSaveRef: any = new EventEmitter();
 
@@ -27,23 +29,13 @@ export class FormDesignerComponent implements OnInit {
     this.designerForm = this.fb.group({
       lists: this.fb.array([
         this.fb.group({
-          fieldName: "Field Name A",
-          parameterName: "Parameter A",
+          fieldName:  new FormControl("", [Validators.required]),
+          parameterName: new FormControl("", [Validators.required]),
           defaultValue: "A",
           required: false,
           formField: "select",
           formFieldParameters: this.fb.group({
-            selectOptions: this.fb.array([])
-          })
-        }),
-        this.fb.group({
-          fieldName: "Field Name B",
-          parameterName: "Parameter B",
-          defaultValue: "B",
-          required: false,
-          formField: "input",
-          formFieldParameters: this.fb.group({
-            selectOptions: this.fb.array([])
+            selectOptions: new FormControl([])
           })
         })
       ])
@@ -56,7 +48,9 @@ export class FormDesignerComponent implements OnInit {
   }
 
   removeSelectFeildOption(formRef, index) {
-    let selectOptionItem = formRef.get('formFieldParameters').get('selectOptions') as FormArray;
+    let selectOptionItem = formRef
+      .get("formFieldParameters")
+      .get("selectOptions") as FormArray;
     selectOptionItem.removeAt(index);
   }
 
@@ -64,13 +58,13 @@ export class FormDesignerComponent implements OnInit {
     const lists = this.designerForm.get("lists") as FormArray;
     lists.push(
       this.fb.group({
-        fieldName: "",
-        parameterName: "",
+        fieldName: new FormControl("", [Validators.required]),
+        parameterName:new FormControl("", [Validators.required]),
         defaultValue: "",
         required: false,
-        formField: new FormControl(this.designerFormFieldTypes[0]),
+        formField: "textarea",
         formFieldParameters: this.fb.group({
-          selectOptions: this.fb.array([])
+          selectOptions: new FormControl([])
         })
       })
     );
@@ -82,8 +76,8 @@ export class FormDesignerComponent implements OnInit {
   }
 
   designerFormFieldOnChange(list) {
-    list.patchValue({"defaultValue": ''});
-    (list.get('formFieldParameters').get('selectOptions') as FormArray)['controls'].splice(0);
+    list.patchValue({ defaultValue: "" });
+    list.get("formFieldParameters").patchValue({"selectOptions":[]});
   }
 
   designerFormOnSave() {

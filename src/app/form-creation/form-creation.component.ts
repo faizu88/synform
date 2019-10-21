@@ -26,10 +26,10 @@ export class FormCreationComponent {
   @Input("formCreationControls") formlyFormControlsRef: any;
 
   renderFormCreation() {
-    let formlyFormFieldsArr = this.formlyFormFieldsArr;
+    const formlyFormFieldsArr = this.formlyFormFieldsArr;
     if (formlyFormFieldsArr.length) {
-      let lists = formlyFormFieldsArr
-      let formlyfieldArr = [];
+      const lists = formlyFormFieldsArr
+      const formlyfieldArr = [];
       //Clearing Formly Models + Formly From Controls
       this.formlyModel = {};
       this.formlyForm = new FormGroup({});
@@ -64,10 +64,41 @@ export class FormCreationComponent {
             formlyFieldObj["templateOptions"]["options"] = selectOptions;
             formlyFieldObj["defaultValue"] = selectOptions.length ? selectOptions[0]["value"] : '';
             break;
+
+          case "ngselect":
+            let ngSelectOptions = lists[i]["formFieldParameters"]["selectOptions"];
+            formlyFieldObj["type"] = lists[i]["formField"];
+            formlyFieldObj["templateOptions"]["options"] = ngSelectOptions;
+            formlyFieldObj["templateOptions"]["valueProp"] = 'value';
+            formlyFieldObj["templateOptions"]["labelProp"] = 'label';
+            break;
+
         }
         formlyfieldArr.push(formlyFieldObj);
       }
       this.formlyFormfields = formlyfieldArr;
+
+
+   /*   this.formlyFormfields= [
+        {
+          key: 'user',
+          type: 'ngselect',
+          templateOptions: {
+            required: true,
+            placeholder: 'Select a user:',
+            options: [
+              { id: 1, fistname: 'foo', lastname: '1' },
+              { id: 2, fistname: 'foo', lastname: '2' },
+              { id: 3, fistname: 'bar', lastname: '1' },
+              { id: 4, fistname: 'bar', lastname: '2' },
+            ],
+            valueProp: 'value',
+            labelProp: opt => `${opt.label} `,
+          }
+        },
+      ];
+*/
+
     }
   }
 

@@ -4,18 +4,27 @@ import {FormCreationComponent} from './form-creation.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from "@ngx-formly/core";
 import {FormlyBootstrapModule} from "@ngx-formly/bootstrap";
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormlySelectModule } from '@ngx-formly/core/select';
+import { NgselectFormlyTypeComponent } from './ngselect-formly-type/ngselect-formly-type.component';
+
 
 @NgModule({
-  declarations: [FormCreationComponent],
+  declarations: [FormCreationComponent, NgselectFormlyTypeComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormlyModule.forRoot({
+      types: [
+        { name: 'ngselect', component: NgselectFormlyTypeComponent}
+      ],
       validationMessages: [
         {name: 'required', message: 'This field is required'}
       ],
     }),
-    FormlyBootstrapModule
+    FormlyBootstrapModule,
+    NgSelectModule,
+    FormlySelectModule
   ],
   exports: [
     CommonModule,
@@ -23,7 +32,10 @@ import {FormlyBootstrapModule} from "@ngx-formly/bootstrap";
     ReactiveFormsModule,
     FormlyModule,
     FormlyBootstrapModule,
-    FormCreationComponent
+    FormCreationComponent,
+    NgselectFormlyTypeComponent,
+    NgSelectModule,
+    FormlySelectModule
   ]
 })
 export class FormCreationModule {
