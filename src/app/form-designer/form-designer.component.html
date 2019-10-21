@@ -1,0 +1,73 @@
+<h1>Form Design</h1>
+<form [formGroup]="designerForm">
+  <div formArrayName="lists">
+    <div *ngFor="let list of designerForm.get('lists')?.controls; let i = index" class="w-50">
+      <div [formGroupName]="i" style="margin-bottom: 10px; " class="d-flex flex-column">
+        <div class="d-flex align-items-center">
+          <input type="text" placeholder="Field Name" class="form-control mr-2" formControlName="fieldName"/>
+          <input type="text" placeholder="Parameter Name" class="form-control mr-2" formControlName="parameterName"/>
+
+
+          <span class="w-75 mr-2"
+                *ngIf="designerForm.get('lists')?.controls[i]?.get('formField')?.value === 'input'">
+            <input type="text" placeholder="Default Value" class="form-control" formControlName="defaultValue"/>
+          </span>
+          <span class="w-75 mr-2"
+                *ngIf="designerForm.get('lists')?.controls[i]?.get('formField')?.value === 'textarea'">
+            <textarea placeholder="Default Value" class="form-control mr-2" rows="1"
+                      formControlName="defaultValue"></textarea>
+          </span>
+          <span class="mr-2"
+                *ngIf="designerForm.get('lists')?.controls[i]?.get('formField')?.value === 'checkbox'">
+            <input type="checkbox" placeholder="Default Value" class=" mr-2" formControlName="defaultValue"/>
+          </span>
+          <span class="w-75 mr-2"
+                *ngIf="designerForm.get('lists')?.controls[i]?.get('formField')?.value === 'number'">
+            <input type="number" placeholder="Default Value" class="form-control mr-2"
+                   formControlName="defaultValue"/>
+          </span>
+          <span class="w-75 mr-2"
+                *ngIf="designerForm.get('lists')?.controls[i]?.get('formField')?.value === 'date'">
+            <input type="date" placeholder="Default Value" class="form-control mr-2"
+                   formControlName="defaultValue"/>
+          </span>
+
+          <select class="form-control mr-2" formControlName="formField" (change)="designerFormFieldOnChange(list)">
+            <option *ngFor="let field of designerFormFieldTypes" [ngValue]="field.type">{{field.label}}</option>
+          </select>
+
+          <input type="checkbox" class="mr-2" formControlName="required"/>
+          <button (click)="designerFormRemoveList(i)" class="btn btn-danger">Remove</button>
+        </div>
+
+
+        <div class="d-flex flex-column  mr-2 w-100 d-flex"
+             *ngIf="designerForm.get('lists')?.controls[i]?.get('formField')?.value === 'select'">
+          <div formGroupName="formFieldParameters" class="w-100 d-flex mt-3 mb-3">
+            <div formArrayName="selectOptions">
+              <div
+                *ngFor="let optionList of list.get('formFieldParameters').get('selectOptions')?.controls; let k = index"
+                class="mb-3 w-100">
+                <div formGroupName="{{k}}" class="d-flex">
+                  <input type="text" placeholder="Label" class="form-control mr-2" formControlName="label">
+                  <input type="text" placeholder="Value" class="form-control mr-2" formControlName="value">
+                  <button (click)="removeSelectFeildOption(list,k)"
+                          class="btn btn-danger">Remove
+                  </button>
+                </div>
+              </div>
+              <button class="btn btn-primary" (click)="addSelectFieldOption(list)">Add Options</button>
+            </div>
+          </div>
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<button (click)="designerFormAddList()" class="btn btn-primary mr-2">Add</button>
+<button (click)="designerFormOnSave()" class="btn btn-primary">Save</button>
+<pre>{{designerForm.value | json}}</pre>

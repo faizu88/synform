@@ -1,0 +1,9 @@
+<div class="w-25" *ngIf="formlyFormFieldsArr.length">
+  <h1>Form Creation</h1>
+  <form [formGroup]="formlyForm" (ngSubmit)="formOnSubmit()">
+    <formly-form [model]="formlyModel" [fields]="formlyFormfields" [form]="formlyForm">
+    </formly-form>
+    <button [disabled]="!formlyForm.valid" type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <pre>{{formlyForm.value | json}}</pre>
+</div>
