@@ -1,0 +1,11 @@
+<form [formGroup]="selectOptionForm">
+  <ng-container *ngFor="let optionList of selectOptionForm.controls; let index = index; let last = last;">
+    <app-select-option-list [formControl]="optionList">
+    </app-select-option-list>
+    <button class="mt-2 mb-2 btn btn-danger " (click)="removeSelectFieldOption(index)"  > Remove </button>
+    <button class="btn btn-primary" (click)="addSelectFieldOption()" *ngIf="last" > Add Options  </button>
+  </ng-container>
+  <ng-container *ngIf="!selectOptionForm.controls.length" class="w-50">
+    <button class="btn btn-primary" (click)="addSelectFieldOption()" > Add Options  </button>
+  </ng-container>
+</form>

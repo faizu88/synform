@@ -1,5 +1,4 @@
 import {Component, OnInit, Output} from '@angular/core';
-import {FormGroup, FormBuilder, FormArray, FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +9,6 @@ export class AppComponent {
   public formDesignerControls: object;
 
   formCreationInit(event) {
-    console.log(event,"event");
     this.formDesignerControls = event;
   }
 }
