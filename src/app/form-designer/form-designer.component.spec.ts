@@ -1,25 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormDesignerComponent } from './form-designer.component';
-
-describe('FormDesignerComponent', () => {
-  let component: FormDesignerComponent;
-  let fixture: ComponentFixture<FormDesignerComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ FormDesignerComponent ]
-    })
-    .compileComponents();
-  }));
+import {FormDesignerModule} from "./form-designer.module";
+describe('UsersModule', () => {
+  let usersModule: FormDesignerModule;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormDesignerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    usersModule = new FormDesignerModule();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create an instance', () => {
+    expect(usersModule).toBeTruthy();
   });
 });

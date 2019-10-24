@@ -3,7 +3,7 @@
   <form [formGroup]="formlyForm" (ngSubmit)="formOnSubmit()">
     <formly-form [model]="formlyModel" [fields]="formlyFormfields" [form]="formlyForm">
     </formly-form>
-    <button [disabled]="!formlyForm.valid" type="submit" class="btn btn-primary">Submit</button>
+    <input type="submit" value="Submit" [disabled]="!formlyForm.valid" class="btn btn-primary">
   </form>
   <pre>{{formlyForm.value | json}}</pre>
 </div>

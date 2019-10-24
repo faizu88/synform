@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {FormGroup} from "@angular/forms";
 
@@ -10,18 +10,18 @@ import {FormGroup} from "@angular/forms";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class FormCreationComponent {
+export class FormCreationComponent implements OnChanges {
   public formlyForm = new FormGroup({});
   public formlyModel = {};
   public formlyFormfields: FormlyFieldConfig[] = [];
   public formlyFormFieldsArr = [];
   /*public formlySelectOptions = [
-    {label: 'Option A', value: 'a'},
-    {label: 'Option B', value: 'b'},
-    {label: 'Option C', value: 'c'},
-    {label: 'Option D', value: 'd'},
-    {label: 'Option E', value: 'e'},
-  ];*/
+   {label: 'Option A', value: 'a'},
+   {label: 'Option B', value: 'b'},
+   {label: 'Option C', value: 'c'},
+   {label: 'Option D', value: 'd'},
+   {label: 'Option E', value: 'e'},
+   ];*/
 
   @Input("formCreationControls") formlyFormControlsRef: any;
 
@@ -41,14 +41,34 @@ export class FormCreationComponent {
         formlyFieldObj["templateOptions"] = {};
         formlyFieldObj["templateOptions"]["label"] = lists[i]["fieldName"];
         formlyFieldObj["templateOptions"]["required"] = lists[i]["required"];
+        formlyFieldObj["validators"] = {};
+
+        let validationPatterObj = {};
+        if (lists[i]["required"] === true) {
+          let validationPatterArr = lists[i]["validation"]["validationPattern"] || [];
+          for (let i = 0; i < validationPatterArr.length; i++) {
+            let regex = RegExp(validationPatterArr[i]);
+            validationPatterObj["v" + i] = {
+              expression: (c) => !c.value || regex.test(c.value),
+              message: (error, field: FormlyFieldConfig) => {
+                return `${field.formControl.value} is not a valid ${formlyFieldType}.`
+              }
+            }
+          }
+        }
+
         switch (formlyFieldType) {
           case "input":
           case "textarea":
             formlyFieldObj["type"] = lists[i]["formField"];
+            formlyFieldObj["validators"] = validationPatterObj;
             break;
           case "number":
+            console.log();
             formlyFieldObj["type"] = "input";
             formlyFieldObj["templateOptions"]["type"] = lists[i]["formField"];
+            formlyFieldObj["templateOptions"]["min"] = lists[i]["validation"]["min"];
+            formlyFieldObj["templateOptions"]["max"] = lists[i]["validation"]["max"];
             break;
           case "date":
             formlyFieldObj["type"] = "input";
@@ -64,7 +84,6 @@ export class FormCreationComponent {
             formlyFieldObj["templateOptions"]["options"] = selectOptions;
             formlyFieldObj["defaultValue"] = selectOptions.length ? selectOptions[0]["value"] : '';
             break;
-
           case "ngselect":
             let ngSelectOptions = lists[i]["formFieldParameters"]["selectOptions"];
             formlyFieldObj["type"] = lists[i]["formField"];
@@ -72,33 +91,10 @@ export class FormCreationComponent {
             formlyFieldObj["templateOptions"]["valueProp"] = 'value';
             formlyFieldObj["templateOptions"]["labelProp"] = 'label';
             break;
-
         }
         formlyfieldArr.push(formlyFieldObj);
       }
       this.formlyFormfields = formlyfieldArr;
-
-
-   /*   this.formlyFormfields= [
-        {
-          key: 'user',
-          type: 'ngselect',
-          templateOptions: {
-            required: true,
-            placeholder: 'Select a user:',
-            options: [
-              { id: 1, fistname: 'foo', lastname: '1' },
-              { id: 2, fistname: 'foo', lastname: '2' },
-              { id: 3, fistname: 'bar', lastname: '1' },
-              { id: 4, fistname: 'bar', lastname: '2' },
-            ],
-            valueProp: 'value',
-            labelProp: opt => `${opt.label} `,
-          }
-        },
-      ];
-*/
-
     }
   }
 
