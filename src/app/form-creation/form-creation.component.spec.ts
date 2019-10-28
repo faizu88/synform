@@ -8,6 +8,7 @@ import {NgselectFormlyTypeComponent} from "./ngselect-formly-type/ngselect-forml
 import {FormCreationComponent} from "./form-creation.component";
 import {FormlyModule} from "@ngx-formly/core";
 import {SimpleChange} from "@angular/core";
+import {By} from "@angular/platform-browser";
 
 describe('FormDesignerComponent', () => {
   beforeEach(async(() => {
@@ -34,7 +35,7 @@ describe('FormDesignerComponent', () => {
   it('should call "renderFormCreation" method', () => {
     const fixture = TestBed.createComponent(FormCreationComponent);
     const formCreationComponent = fixture.debugElement.componentInstance;
-    formCreationComponent.renderFormCreation = jest.fn();
+    formCreationComponent.renderFormCreation = jest.fn(); //1
     const listObj = {
       "lists": [{
         "fieldName": "",
@@ -84,7 +85,16 @@ describe('FormDesignerComponent', () => {
           "required": false,
           "formField": "number",
           "formFieldParameters": {}
-        }
+        },
+        {
+          "fieldName": "",
+          "parameterName": "",
+          "defaultValue": "",
+          "validation": {},
+          "required": null,
+          "formField": "date",
+          "formFieldParameters": {}
+        },
       ]
     };
     formCreationComponent.formlyFormControlsRef = listObj;
@@ -93,11 +103,52 @@ describe('FormDesignerComponent', () => {
     });
     fixture.detectChanges();
     expect(formCreationComponent.formlyFormfields[0]["type"]).toBe("input");
-    console.log((formCreationComponent.formlyFormfields[0]["validators"]["v0"]));
-    expect(formCreationComponent.formlyFormfields[0]["templateOptions"]["v0"]).toHaveProperty('message');
+    expect((formCreationComponent.formlyFormfields[0]["validators"]['v0'])).toHaveProperty('expression');
     expect(formCreationComponent.formlyFormfields[1]["templateOptions"]["type"]).toBe("number");
     expect(formCreationComponent.formlyFormfields[1]["templateOptions"]["min"]).toBe("10");
     expect(formCreationComponent.formlyFormfields[1]["templateOptions"]["max"]).toBe("12");
+  }));
+
+  it('should submit the form', async(() => {
+    const fixture = TestBed.createComponent(FormCreationComponent);
+    const formCreationComponent = fixture.debugElement.componentInstance;
+    formCreationComponent.formOnSubmit = jest.fn();
+    const listObj = {
+      "lists": [
+        {
+          "fieldName": "",
+          "parameterName": "",
+          "defaultValue": "",
+          "validation": {
+            "validationPattern": [
+              "[0-9]$"
+            ]
+          },
+          "required": true,
+          "formField": "input",
+          "formFieldParameters": {}
+        },
+        {
+          "fieldName": "",
+          "parameterName": "",
+          "defaultValue": "",
+          "validation": {
+            "min": "10",
+            "max": "12"
+          },
+          "required": false,
+          "formField": "number",
+          "formFieldParameters": {}
+        }
+      ]
+    };
+    formCreationComponent.formlyFormFieldsArr = listObj["lists"];
+    fixture.detectChanges();
+    let el = fixture.debugElement.query(By.css('form'));
+    el.triggerEventHandler('ngSubmit', null);
+    el.triggerEventHandler('ngSubmit', null);
+    fixture.detectChanges();
+    expect(formCreationComponent.formOnSubmit).toHaveBeenCalledTimes(2);
   }));
 
 });

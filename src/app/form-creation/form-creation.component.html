@@ -1,9 +1,10 @@
 <div class="w-25" *ngIf="formlyFormFieldsArr.length">
   <h1>Form Creation</h1>
-  <form [formGroup]="formlyForm" (ngSubmit)="formOnSubmit()">
+  <form class="formssss" [formGroup]="formlyForm" (ngSubmit)="formOnSubmit()">
     <formly-form [model]="formlyModel" [fields]="formlyFormfields" [form]="formlyForm">
     </formly-form>
-    <input type="submit" value="Submit" [disabled]="!formlyForm.valid" class="btn btn-primary">
+    <input type="submit" value="Submit" [disabled]="!formlyForm.valid" class="btn btn-primary submit">
   </form>
   <pre>{{formlyForm.value | json}}</pre>
 </div>
+  <button (click)="formOnSubmit()">sdsadasd</button>
