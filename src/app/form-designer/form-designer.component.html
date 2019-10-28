@@ -33,17 +33,35 @@
             </ng-container>
           </ng-container>
           <input type="checkbox" class="mr-2" formControlName="required"/>
-          <button (click)="designerFormRemoveList(i)" class="btn btn-danger">Remove</button>
+          <input type="button" value="Remove" (click)="designerFormRemoveList(i)" class="btn btn-danger">
         </div>
-        <ng-container *ngIf="(list?.get('formField')?.value === 'select') || (list?.get('formField')?.value === 'ngselect') ">
-          <div formGroupName="formFieldParameters" class="d-flex mt-3">
+
+        <ng-container
+          *ngIf="(list?.get('formField')?.value === 'select') || (list?.get('formField')?.value === 'ngselect') ">
+
+        <!--  <div formGroupName="formFieldParameters" class="d-flex mt-3">
             <app-select-option formControlName="selectOptions"></app-select-option>
-          </div>
+          </div>-->
+
+          <!------------------------------ Testing ------------------------------>
+          <app-select-option formControlName="formFieldParameters"></app-select-option>
+          <!------------------------------ Testing ------------------------------>
+
         </ng-container>
+
+        <ng-container *ngIf="(list?.get('formField')?.value === 'input') ||
+        (list?.get('formField')?.value === 'textarea') ||
+        (list?.get('formField')?.value === 'number')">
+        <app-validation formControlName="validation" [formField]="list?.get('formField')?.value"
+                        class="d-flex mt-3"></app-validation>
+        </ng-container>
+
       </div>
     </div>
   </div>
 </form>
-<button (click)="designerFormAddList()" [disabled]="designerForm.invalid" class="btn btn-primary mr-2">Add</button>
-<button (click)="designerFormOnSave()" [disabled]="designerForm.invalid" class="btn btn-primary">Save</button>
+<input type="button" (click)="designerFormAddList()" value="Add" [disabled]="designerForm.invalid"
+       class="btn btn-primary mr-2">
+<input type="button" (click)="designerFormOnSave()" value="Save" [disabled]="designerForm.invalid"
+       class="btn btn-primary">
 <pre>{{designerForm.value | json}}</pre>

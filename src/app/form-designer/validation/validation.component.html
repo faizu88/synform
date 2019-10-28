@@ -1,0 +1,19 @@
+<form [formGroup]="validationform">
+  <ng-container [ngSwitch]="formFieldRef">
+    <ng-container *ngSwitchCase="'number'">
+      <input type="text" placeholder="Min" class="form-control mr-1 mb-2" formControlName="min">
+      <input type="text" placeholder="Max" class="form-control mr-1 mb-2" formControlName="max">
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <ng-container formArrayName="validationPattern">
+        <div *ngFor="let validationItem of validationform?.get('validationPattern')['controls']; let index=index">
+          <input type="text" placeholder="Pattern" class="form-control mr-1 mb-2" [formControl]="validationItem"/>
+          <input type="button" value="Remove" class="btn btn-danger mr-2  mb-2"
+                 (click)="removeValidationPattern(index)">
+        </div>
+        <input type="button" value="Add Validation" class="btn btn-primary mr-2 " (click)="addValidationPattern()">
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</form>
+

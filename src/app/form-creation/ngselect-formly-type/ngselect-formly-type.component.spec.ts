@@ -1,25 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgselectFormlyTypeComponent } from './ngselect-formly-type.component';
-
-describe('NgselectFormlyTypeComponent', () => {
-  let component: NgselectFormlyTypeComponent;
-  let fixture: ComponentFixture<NgselectFormlyTypeComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ NgselectFormlyTypeComponent ]
-    })
-    .compileComponents();
-  }));
+import {FormCreationModule} from "../form-creation.module";
+describe('UsersModule', () => {
+  let usersModule: FormCreationModule;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NgselectFormlyTypeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    usersModule = new FormCreationModule();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create an instance', () => {
+    expect(usersModule).toBeTruthy();
   });
 });
