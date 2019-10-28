@@ -30,7 +30,7 @@ export class FormDesignerComponent implements OnInit {
         this.fb.group({
           fieldName: new FormControl("", [Validators.required]),
           parameterName: new FormControl("", [Validators.required]),
-          defaultValue: "aaaaaaaaa",
+          defaultValue: "",
           validation: new FormControl({}),
           required: false,
           formField: "input",
@@ -38,6 +38,8 @@ export class FormDesignerComponent implements OnInit {
         })
       ])
     });
+
+    this.patchFormValue();
   }
 
   patchFormValue() {

@@ -64,7 +64,6 @@ export class FormCreationComponent implements OnChanges {
             formlyFieldObj["validators"] = validationPatterObj;
             break;
           case "number":
-            console.log();
             formlyFieldObj["type"] = "input";
             formlyFieldObj["templateOptions"]["type"] = lists[i]["formField"];
             formlyFieldObj["templateOptions"]["min"] = lists[i]["validation"]["min"];

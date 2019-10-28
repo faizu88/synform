@@ -1,10 +1,10 @@
 module.exports = {
   preset: 'jest-preset-angular',
-  setupFilesAfterEnv: ['./setup-jest.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/setup-jest.ts'],
   globals: {
     'ts-jest': {
       diagnostics: {
-        ignoreCodes: [151001]
+        //ignoreCodes: [151001]
       }
     }
   }
