@@ -146,9 +146,8 @@ describe('FormDesignerComponent', () => {
     fixture.detectChanges();
     let el = fixture.debugElement.query(By.css('form'));
     el.triggerEventHandler('ngSubmit', null);
-    el.triggerEventHandler('ngSubmit', null);
     fixture.detectChanges();
-    expect(formCreationComponent.formOnSubmit).toHaveBeenCalledTimes(2);
+    expect(formCreationComponent.formOnSubmit).toHaveBeenCalledTimes(1);
   }));
 
 });
