@@ -14,7 +14,9 @@ import {ValidationComponent} from './validation/validation.component';
   exports: [
     CommonModule,
     ReactiveFormsModule,
-    FormDesignerComponent
+    FormDesignerComponent,
+    SelectOptionComponent,
+    ValidationComponent
   ]
 })
 export class FormDesignerModule {

@@ -62,7 +62,6 @@ export class FormCreationComponent implements OnChanges {
           case "textarea":
             formlyFieldObj["type"] = lists[i]["formField"];
             formlyFieldObj["validators"] = validationPatterObj;
-            console.log(validationPatterObj,"<<<<<<<<<")
             break;
           case "number":
             formlyFieldObj["type"] = "input";
