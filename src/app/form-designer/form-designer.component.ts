@@ -21,7 +21,7 @@ export class FormDesignerComponent implements OnInit {
   ];
   @Output("designerFormOnSave") designerFormOnSaveRef: any = new EventEmitter();
 
-  constructor(private fb: FormBuilder) {
+  constructor(public fb: FormBuilder) {
   }
 
   designerFormInit() {
@@ -39,7 +39,7 @@ export class FormDesignerComponent implements OnInit {
       ])
     });
 
-    this.patchFormValue();
+   // this.patchFormValue();
   }
 
   patchFormValue() {
@@ -115,19 +115,6 @@ export class FormDesignerComponent implements OnInit {
         formFieldParameters: new FormControl(itemObj.formFieldParameters)
       }));
     }
-  }
-
-
-  addSelectFieldOption(formRef) {
-    const selectOptionItem = formRef.get("formFieldParameters").get("selectOptions") as FormArray;
-    selectOptionItem.push(this.fb.group({label: '', value: ''}));
-  }
-
-  removeSelectFeildOption(formRef, index) {
-    let selectOptionItem = formRef
-      .get("formFieldParameters")
-      .get("selectOptions") as FormArray;
-    selectOptionItem.removeAt(index);
   }
 
   designerFormAddList() {
