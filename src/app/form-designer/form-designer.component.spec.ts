@@ -4,7 +4,6 @@ import {FormDesignerComponent} from "./form-designer.component";
 import {SelectOptionComponent} from "./select-option/select-option.component";
 import {ValidationComponent} from "./validation/validation.component";
 import {FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
-import {detectChanges} from "@angular/core/src/render3";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('FormDesignerComponent', () => {
@@ -17,8 +16,7 @@ describe('FormDesignerComponent', () => {
       providers: [
         FormBuilder
       ],
-      imports: [RouterTestingModule, ReactiveFormsModule],
-      schemas: [NO_ERRORS_SCHEMA]
+      imports: [RouterTestingModule, ReactiveFormsModule]
     }).compileComponents();
     fixture = TestBed.createComponent(FormDesignerComponent);
     formDesignerComponentRef = fixture.debugElement.componentInstance;
@@ -135,11 +133,39 @@ describe('FormDesignerComponent', () => {
   });
 
   it('remove designer form list', () => {
-     fixture.detectChanges();
+    fixture.detectChanges();
     const formCtrls = formDesignerComponentRef.designerForm.get('lists')["controls"];
     expect(formCtrls.length).toBe(1);
     formDesignerComponentRef.designerFormRemoveList(0);
     expect(formCtrls.length).toBe(0);
+  });
+
+  it('should reset the default value', () => {
+    fixture.detectChanges();
+    const formCtrls = formDesignerComponentRef.designerForm.get('lists')["controls"][0];
+    formCtrls.patchValue({defaultValue: "default"});
+    expect(formCtrls.get('defaultValue').value).toBe('default');
+    formDesignerComponentRef.designerFormFieldOnChange(formCtrls);
+    expect(formCtrls.get('defaultValue').value).toBe("");
+  });
+
+  it('should update the designerFormControls while saving', () => {
+    fixture.detectChanges();
+    const matchObjectRef = {
+      "lists": [
+        {
+          "fieldName": "",
+          "parameterName": "",
+          "defaultValue": "",
+          "validation": {},
+          "required": false,
+          "formField": "input",
+          "formFieldParameters": {}
+        }
+      ]
+    };
+    formDesignerComponentRef.designerFormOnSave();
+    expect(formDesignerComponentRef.designerFormControls).toMatchObject(matchObjectRef);
   });
 });
 

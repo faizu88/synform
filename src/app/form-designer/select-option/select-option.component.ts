@@ -1,29 +1,29 @@
-import {Component, forwardRef, OnDestroy} from '@angular/core';
-import {FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
+import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
+import {FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+
+export const NG_VALUE_ACCESSOR_: any = {
+  provide: NG_VALUE_ACCESSOR,
+  multi: true,
+  useExisting: forwardRef(() => SelectOptionComponent)
+}
+
 
 @Component({
   selector: 'app-select-option',
   templateUrl: './select-option.component.html',
   styleUrls: ['./select-option.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: forwardRef(() => SelectOptionComponent)
-    }
-  ]
+  providers: [NG_VALUE_ACCESSOR_]
 })
-export class SelectOptionComponent implements OnDestroy {
+export class SelectOptionComponent implements OnDestroy, OnInit {
   public selectOptionForm: FormGroup;
   public registerOnChangeFn;
   private destroy$ = new Subject();
 
   writeValue(v: any) {
     const objValue = v;
-    this.selectOptionForm = new FormGroup({});
-    this.selectOptionForm.addControl("selectOptions", new FormArray([]));
+    /*this.selectOptionForm = new FormGroup({});
+     this.selectOptionForm.addControl("selectOptions", new FormArray([]));*/
     let selectOptionArrRef = this.selectOptionForm.get('selectOptions') as FormArray;
     objValue['selectOptions'] = objValue['selectOptions'] || [];
     for (const obj of objValue['selectOptions']) {
@@ -32,13 +32,11 @@ export class SelectOptionComponent implements OnDestroy {
         value: new FormControl(obj.value)
       }));
     }
-
-    this.selectOptionForm.valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe(res => {
-        if (this.registerOnChangeFn) {
-          this.registerOnChangeFn(this.selectOptionForm.value);
-        }
-      });
+    this.selectOptionForm.valueChanges.subscribe(res => {
+      if (this.registerOnChangeFn) {
+        this.registerOnChangeFn(this.selectOptionForm.value);
+      }
+    });
   }
 
   addSelectFieldOption() {
@@ -63,5 +61,10 @@ export class SelectOptionComponent implements OnDestroy {
     this.registerOnChangeFn({});
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
+  }
+
+  ngOnInit() {
+    this.selectOptionForm = new FormGroup({});
+    this.selectOptionForm.addControl("selectOptions", new FormArray([]));
   }
 }
