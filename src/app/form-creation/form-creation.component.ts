@@ -15,14 +15,6 @@ export class FormCreationComponent implements OnChanges {
   public formlyModel = {};
   public formlyFormfields: FormlyFieldConfig[] = [];
   public formlyFormFieldsArr = [];
-  /*public formlySelectOptions = [
-   {label: 'Option A', value: 'a'},
-   {label: 'Option B', value: 'b'},
-   {label: 'Option C', value: 'c'},
-   {label: 'Option D', value: 'd'},
-   {label: 'Option E', value: 'e'},
-   ];*/
-
   @Input("formCreationControls") formlyFormControlsRef: any;
 
   renderFormCreation() {
@@ -53,7 +45,7 @@ export class FormCreationComponent implements OnChanges {
               message: (error, field: FormlyFieldConfig) => {
                 return `${field.formControl.value} is not a valid ${formlyFieldType}.`
               }
-            }
+            };
           }
         }
 

@@ -39,7 +39,7 @@ export class FormDesignerComponent implements OnInit {
       ])
     });
 
-   //this.patchFormValue();
+    //this.patchFormValue();
   }
 
   patchFormValue() {
@@ -97,13 +97,13 @@ export class FormDesignerComponent implements OnInit {
     listArray.controls = [];
     for (let i = 0; i < lists.length; i++) {
       let itemObj = {
-        fieldName: lists[i]["fieldName"] || null,
-        parameterName: lists[i]["parameterName"] || null,
-        defaultValue: lists[i]["defaultValue"] || null,
-        validation: lists[i]["validation"] || {},
-        required: lists[i]["required"] || null,
-        formField: lists[i]["formField"] || null,
-        formFieldParameters: lists[i]["formFieldParameters"] || {},
+        fieldName: lists[i]['fieldName'] || null,
+        parameterName: lists[i]['parameterName'] || null,
+        defaultValue: lists[i]['defaultValue'] || null,
+        validation: lists[i]['validation'] || {},
+        required: lists[i]['required'] || null,
+        formField: lists[i]['formField'] || null,
+        formFieldParameters: lists[i]['formFieldParameters'] || {},
       };
       listArray.push(this.fb.group({
         fieldName: new FormControl(itemObj.fieldName, [Validators.required]),
@@ -118,32 +118,31 @@ export class FormDesignerComponent implements OnInit {
   }
 
   designerFormAddList() {
-    const lists = this.designerForm.get("lists") as FormArray;
+    const lists = this.designerForm.get('lists') as FormArray;
     lists.push(
       this.fb.group({
-        fieldName: new FormControl("", [Validators.required]),
-        parameterName: new FormControl("", [Validators.required]),
-        defaultValue: "",
+        fieldName: new FormControl('', [Validators.required]),
+        parameterName: new FormControl('', [Validators.required]),
+        defaultValue: '',
         validation: new FormControl({validationPattern: []}),
         required: false,
-        formField: "input",
+        formField: 'input',
         formFieldParameters: new FormControl({})
       })
     );
   }
 
   designerFormRemoveList(index) {
-    let globalParamForm = this.designerForm.get("lists") as FormArray;
+    const globalParamForm = this.designerForm.get('lists') as FormArray;
     globalParamForm.removeAt(index);
   }
 
   designerFormFieldOnChange(list) {
-    const activeFormField: string = list.get("formField").value;
-    list.patchValue({defaultValue: ""});
+    const activeFormField: string = list.get('formField').value;
+    list.patchValue({defaultValue: ''});
   }
 
   designerFormOnSave() {
-    //<app-form-creation @Input> - Property Binding
     this.designerFormControls = this.designerForm.getRawValue();
     this.designerFormOnSaveRef.emit(this.designerFormControls);
   }

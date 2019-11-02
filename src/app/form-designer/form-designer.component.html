@@ -38,15 +38,7 @@
 
         <ng-container
           *ngIf="(list?.get('formField')?.value === 'select') || (list?.get('formField')?.value === 'ngselect') ">
-
-        <!--  <div formGroupName="formFieldParameters" class="d-flex mt-3">
-            <app-select-option formControlName="selectOptions"></app-select-option>
-          </div>-->
-
-          <!------------------------------ Testing ------------------------------>
           <app-select-option formControlName="formFieldParameters"></app-select-option>
-          <!------------------------------ Testing ------------------------------>
-
         </ng-container>
 
         <ng-container *ngIf="(list?.get('formField')?.value === 'input') ||
