@@ -3,8 +3,11 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 
 If docker installed then,
+
 docker-compose build
+
 docker-compose up
+
 docker-compose stop sha256ID
 
 
