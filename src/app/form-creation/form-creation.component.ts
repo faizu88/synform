@@ -21,6 +21,7 @@ export class FormCreationComponent implements OnChanges {
     const formlyFormFieldsArr = this.formlyFormFieldsArr;
     if (formlyFormFieldsArr.length) {
       const lists = formlyFormFieldsArr
+      console.log(lists);
       const formlyfieldArr = [];
       //Clearing Formly Models + Formly From Controls
       this.formlyModel = {};
@@ -30,6 +31,8 @@ export class FormCreationComponent implements OnChanges {
         let formlyFieldType = lists[i]["formField"];
         formlyFieldObj["key"] = lists[i]["fieldName"] || ("fieldName" + i);
         formlyFieldObj["defaultValue"] = lists[i]["defaultValue"];
+       // console.log(lists[i]["rowNumber"]);
+        //formlyFieldObj["templateOptions"]["rows"] = lists[i]["rowNumber"];
         formlyFieldObj["templateOptions"] = {};
         formlyFieldObj["templateOptions"]["label"] = lists[i]["fieldName"];
         formlyFieldObj["templateOptions"]["required"] = lists[i]["required"];
@@ -53,6 +56,7 @@ export class FormCreationComponent implements OnChanges {
           case "input":
           case "textarea":
             formlyFieldObj["type"] = lists[i]["formField"];
+            formlyFieldObj["templateOptions"]["rows"] = lists[i]["rowNumber"];
             formlyFieldObj["validators"] = validationPatterObj;
             break;
           case "number":
@@ -84,8 +88,10 @@ export class FormCreationComponent implements OnChanges {
             break;
         }
         formlyfieldArr.push(formlyFieldObj);
+        console.log(formlyfieldArr);
       }
       this.formlyFormfields = formlyfieldArr;
+      console.log(this.formlyFormfields);
     }
   }
 

@@ -31,6 +31,7 @@ export class FormDesignerComponent implements OnInit {
           fieldName: new FormControl("", [Validators.required]),
           parameterName: new FormControl("", [Validators.required]),
           defaultValue: "",
+          rowNumber: new FormControl("", [Validators.required]),
           validation: new FormControl({}),
           required: false,
           formField: "input",
@@ -100,6 +101,7 @@ export class FormDesignerComponent implements OnInit {
         fieldName: lists[i]['fieldName'] || null,
         parameterName: lists[i]['parameterName'] || null,
         defaultValue: lists[i]['defaultValue'] || null,
+        rowNumber: lists[i]['rowNumber'] || null,
         validation: lists[i]['validation'] || {},
         required: lists[i]['required'] || null,
         formField: lists[i]['formField'] || null,
@@ -124,6 +126,7 @@ export class FormDesignerComponent implements OnInit {
         fieldName: new FormControl('', [Validators.required]),
         parameterName: new FormControl('', [Validators.required]),
         defaultValue: '',
+        rowNumber: new FormControl('',[Validators.required]),
         validation: new FormControl({validationPattern: []}),
         required: false,
         formField: 'input',
@@ -145,6 +148,7 @@ export class FormDesignerComponent implements OnInit {
   designerFormOnSave() {
     this.designerFormControls = this.designerForm.getRawValue();
     this.designerFormOnSaveRef.emit(this.designerFormControls);
+    console.log(this.designerFormControls)
   }
 
   ngOnInit() {

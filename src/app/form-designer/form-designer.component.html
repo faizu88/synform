@@ -18,8 +18,10 @@
               <input type="text" placeholder="Default Value" class="form-control mr-2" formControlName="defaultValue"/>
             </ng-container>
             <ng-container *ngSwitchCase="'textarea'">
-              <textarea placeholder="Default Value" class="form-control mr-2" rows="1"
+              <textarea placeholder="Default Value" class="form-control mr-2" 
                         formControlName="defaultValue"></textarea>
+              <input type="number" placeholder="Rows" class="form-control mr-2"
+                        formControlName="rowNumber"/>
             </ng-container>
             <ng-container *ngSwitchCase="'checkbox'">
               <input type="checkbox" placeholder="Default Value" class="mr-2" formControlName="defaultValue"/>
