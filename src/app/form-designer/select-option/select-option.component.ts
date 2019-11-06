@@ -17,7 +17,7 @@ export const NG_VALUE_ACCESSOR_: any = {
 })
 export class SelectOptionComponent implements OnDestroy, OnInit {
   public selectOptionForm: FormGroup;
-  public registerOnChangeFn;
+  public registerOnChangeFn=function({}){};
   private destroy$ = new Subject();
 
   writeValue(v: any) {
@@ -50,14 +50,16 @@ export class SelectOptionComponent implements OnDestroy, OnInit {
   }
 
   registerOnChange(fn: any): void {
+    //console.log("hi");
     this.registerOnChangeFn = fn;
+    
   }
 
   registerOnTouched(fn: () => void) {
   }
 
   ngOnDestroy() {
-    //Clearing the formFieldParameters with {}
+    console.log("hi");
     this.registerOnChangeFn({});
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
@@ -66,5 +68,6 @@ export class SelectOptionComponent implements OnDestroy, OnInit {
   ngOnInit() {
     this.selectOptionForm = new FormGroup({});
     this.selectOptionForm.addControl("selectOptions", new FormArray([]));
+    
   }
 }
